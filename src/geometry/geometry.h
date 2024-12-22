@@ -1,4 +1,4 @@
-// The geometric processor package provides an implementation of entities used  :
+// The geometry package provides an implementation of entities used  :
 // . for algebraic calculation such as "XYZ" coordinates, "Mat"
 // matrix
 // . for basis analytic geometry such as Transformations, point,
@@ -10,8 +10,9 @@
 #define GEOMETRY_H
 
 #include <glm/glm.hpp>
+#include <vector>
 
-// Define some geometry objects.
+// Defines some geometry objects.
 // -----------------------------
 
 // Defines a 3D cartesian point. 
@@ -25,6 +26,9 @@ using gp_Vec = glm::vec<3, double>;
 
 // Defines a non-persistent vector in 2D space.
 using gp_Vec2d = glm::vec<2, double>;
+
+// Defines a 3D cartesian point sequence.
+using gp_Array1OfPnt = std::vector<gp_Pnt>;
 
 // Provides information about the continuity of a curve.
 enum Geom_Continuity 

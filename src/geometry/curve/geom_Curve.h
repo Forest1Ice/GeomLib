@@ -4,6 +4,7 @@
 #define GEOM_CURVE_H
 
 #include "geometry.h"
+#include "utils.h"
 
 class Geom_Curve
 {
@@ -37,6 +38,9 @@ public:
 
     // Returns true if the degree of continuity of this curve is at least N.
     virtual bool IsCN(const int n) const = 0;
+
+    // Creates a new object which is a copy of this curve.
+    virtual handle<Geom_Curve> Copy() const = 0;
 
     // Computes the point of parameter u.
     gp_Pnt Value(const double u) const;
