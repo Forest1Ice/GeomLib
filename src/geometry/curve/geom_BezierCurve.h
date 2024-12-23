@@ -48,23 +48,6 @@ public:
     // Raised if weight <= Resolution from package goemetry.
     void SetWeight(const int index, const double weight);
 
-    // Returns true if the distance between the first point
-    // and the last point of the curve is not more than the
-    // Resolution from package goemetry.
-    bool IsClosed() const override;
-
-    // Continuity of the curve, returns true as the continuity of a Bezier curve is infinite.
-    bool IsCN (const int n) const override;
-    
-    // Returns false if all the weights are identical. The tolerance criterion is Resolution from geometry package.
-    bool IsRational() const;
-
-    // a Bezier curve is CN
-    Geom_Continuity Continuity() const override;
-
-    // Returns the polynomial degree of the curve.
-    int Degree() const;
-
     void D0 (const double u, gp_Pnt& p) const override;
 
     void D1 (const double u, gp_Pnt& p, gp_Vec& v1) const override;
@@ -73,40 +56,99 @@ public:
 
     gp_Vec DN(const double u, const int n) const override;
 
+    // Returns true if the distance between the first point
+    // and the last point of the curve is not more than the
+    // Resolution from package goemetry.
+    inline bool IsClosed() const override
+    {
+        return m_closed;
+    }
+
+    // Continuity of the curve, returns true as the continuity of a Bezier curve is infinite.
+    inline bool IsCN (const int n) const override
+    {
+        return true;
+    }
+    
+    // Returns false if all the weights are identical. The tolerance criterion is Resolution from geometry package.
+    inline bool IsRational() const
+    {
+        return (m_weights.size() != 0);
+    }
+
+    // a Bezier curve is CN
+    Geom_Continuity Continuity() const override
+    {
+        return Geom_Continuity::Geom_CN;
+    }
+
+    // Returns the polynomial degree of the curve.
+    inline int Degree() const
+    {
+        return NbPoles() - 1;
+    }
+
     // Returns Value (u=0), it is the first control point of the curve.
-    gp_Pnt StartPoint() const override;
+    inline gp_Pnt StartPoint() const override
+    {
+        return m_poles[0];
+    }
 
     // Returns Value (u=1), it is the last control point of the curve.
-    gp_Pnt EndPoint() const override;
+    inline gp_Pnt EndPoint() const override
+    {
+        return m_poles[Degree()];
+    }
     
     // This is 0.0, which gives the start point of this Bezier curve.
-    double FirstParameter() const override;
+    inline double FirstParameter() const override
+    {
+        return 0.0;
+    }
 
     // This is 1.0, which gives the last point of this Bezier curve.
-    double LastParameter() const override;
+    inline double LastParameter() const override
+    {
+        return 1.0;
+    }
 
     // Returns the number of poles of this Bezier curve.
-    int NbPoles() const;
+    inline int NbPoles() const
+    {
+        return m_poles.size();
+    }
 
     // Returns the pole of range index.
     // Raised if the index is not in the range [0, m_NbPoles - 1].
     const gp_Pnt& Pole(const int index) const;
 
     // Returns all the poles of the curve.
-    void Poles(gp_Array1OfPnt& p) const;
+    inline void Poles(gp_Array1OfPnt& p) const
+    {
+        p = m_poles;
+    }
 
     // Returns all the poles of the curve.
-    const gp_Array1OfPnt& Poles() const;
+    inline const gp_Array1OfPnt& Poles() const
+    {
+        return m_poles;
+    }
+
+    // Returns the weight of range index.
+    double Weight(const int index) const;
 
     // Returns all the weights of the curve.
     void Weights(std_Array1OfReal& weights) const;
 
     // Returns all the weights of the curve.
-    const std_Array1OfReal& Weights() const;
+    std_Array1OfReal Weights() const;
 
     // Returns the value of the maximum polynomial degree of
     // any Geom_BezierCurve curve. This value is 25.
-    static int MaxDegree();
+    inline static int MaxDegree()
+    {
+        return 25;
+    }
 
     // Computes for this Bezier curve the parametric tolerance uTolerance for a given 3D tolerance tolerance3D.
     // If f(t) is the equation of this Bezier curve,
@@ -124,7 +166,6 @@ private:
     void Init(const gp_Array1OfPnt& poles, const std_Array1OfReal& weights);
 
 private:
-    bool m_rational;
     bool m_closed;
     gp_Array1OfPnt m_poles;
     std_Array1OfReal m_weights;

@@ -40,7 +40,7 @@ using gp_Array1OfPnt = std::vector<gp_Pnt>;
 const double gp_Resolution = Precision::RealSmall();
 
 // Provides information about the continuity of a curve.
-enum Geom_Continuity 
+enum class Geom_Continuity 
 {
   Geom_C0, Geom_G1, Geom_C1, Geom_G2,
   Geom_C2, Geom_C3, Geom_CN
