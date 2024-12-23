@@ -121,12 +121,13 @@ private:
     // Set poles and weights. If weights is null the curve is non-rational
     // and weights are assumed to have the first coefficient 1.
     // Update rational and closed.
-    void Init(const handle<gp_Array1OfPnt>& poles, const handle<std_Array1OfReal>& weights);
+    void Init(const gp_Array1OfPnt& poles, const std_Array1OfReal& weights);
 
+private:
     bool m_rational;
     bool m_closed;
-    handle<gp_Array1OfPnt> m_poles;
-    handle<std_Array1OfReal> m_weights;
+    gp_Array1OfPnt m_poles;
+    std_Array1OfReal m_weights;
 };
 
 #endif

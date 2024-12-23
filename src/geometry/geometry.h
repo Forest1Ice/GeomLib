@@ -12,6 +12,8 @@
 #include <glm/glm.hpp>
 #include <vector>
 
+#include "precision.h"
+
 // Defines some geometry objects.
 // -----------------------------
 
@@ -29,6 +31,13 @@ using gp_Vec2d = glm::vec<2, double>;
 
 // Defines a 3D cartesian point sequence.
 using gp_Array1OfPnt = std::vector<gp_Pnt>;
+
+
+// Defines some constants for geometric computations.
+// -------------------------------------------------
+
+// Defines the tolerance criterion used to determine when two numbers can be considered equal.
+const double gp_Resolution = Precision::RealSmall();
 
 // Provides information about the continuity of a curve.
 enum Geom_Continuity 
