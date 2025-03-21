@@ -1,2 +1,2 @@
-# NURBSLib
-A simple NURBS library with some specific functions.
+# GeomLib
+A simple Geometry modeling library with some specific functions.
